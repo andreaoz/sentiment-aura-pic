@@ -16,11 +16,12 @@ def emotion_detector(text_to_analyse):
         elif any(w in text_lower for w in ['sad', 'unhappy', 'depressed', 'down']):
             dominant_emotion = 'sadness'
         else:
-            dominant_emotion = 'disgust'  # fallback si no se detecta
+            dominant_emotion = 'disgust'  
     else:
         dominant_emotion = 'neutral'
 
     return {
+        'compound' : compound,
         'anger': None,
         'disgust': None,
         'fear': None,

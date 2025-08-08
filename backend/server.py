@@ -16,6 +16,7 @@ def sent_detector():
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyze)
 
+    compound =response ['compound']
     anger = response['anger']
     disgust = response['disgust']
     fear = response['fear']
@@ -31,14 +32,8 @@ def sent_detector():
         f"'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, "
         f"'joy': {joy} and 'sadness': {sadness}. "
         f"The dominant emotion is {dominant_emotion}."
+        f"Compound= {compound}."
     )
-
-@app.route("/")
-def render_index_page():
-    """
-    Renders the index page for the Emotion Detector application.
-    """
-    return render_template('index.html')
 
 if __name__ == "__main__":
     #had to use 7000 because I was using 5000 for the practice
