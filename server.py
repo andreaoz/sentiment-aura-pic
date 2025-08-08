@@ -42,5 +42,4 @@ def render_index_page():
 
 if __name__ == "__main__":
     #had to use 7000 because I was using 5000 for the practice
-    app.run(host="0.0.0.0", port=700
-
+    app.run(host="0.0.0.0", port=700)

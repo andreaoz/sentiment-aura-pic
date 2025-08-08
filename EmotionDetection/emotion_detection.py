@@ -1,36 +1,30 @@
-import requests
-import json
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+sid = SentimentIntensityAnalyzer()
 
 def emotion_detector(text_to_analyse):
-    url = 'https://sn-watson-emotion.labs.skills.network/v1/watson.runtime.nlp.v1/NlpService/EmotionPredict'
-    header = {"grpc-metadata-mm-model-id": "emotion_aggregated-workflow_lang_en_stock"}
-    myobj = { "raw_document": { "text": text_to_analyse } }
-    response = requests.post(url, json = myobj, headers=header)  # Send a POST request to the API with the text and headers
-    
-    formatted_response = json.loads(response.text)
+    scores = sid.polarity_scores(text_to_analyse)
+    compound = scores['compound']
 
-    #if statuscode is 400, return none
-    if response.status_code == 400:
-        anger = None
-        disgust = None
-        fear = None
-        joy = None
-        sadness = None
-        dominant_emotion = None
+    if compound >= 0.5:
+        dominant_emotion = 'joy'
+    elif compound <= -0.5:
+        text_lower = text_to_analyse.lower()
+        if any(w in text_lower for w in ['fear', 'scared', 'afraid', 'terrified']):
+            dominant_emotion = 'fear'
+        elif any(w in text_lower for w in ['anger', 'angry', 'mad', 'furious']):
+            dominant_emotion = 'anger'
+        elif any(w in text_lower for w in ['sad', 'unhappy', 'depressed', 'down']):
+            dominant_emotion = 'sadness'
+        else:
+            dominant_emotion = 'disgust'  # fallback si no se detecta
+    else:
+        dominant_emotion = 'neutral'
 
-    else: 
-        #Extracting the scores of the required set of emotions.
-        anger = formatted_response['emotionPredictions'][0]['emotion']['anger']
-        disgust = formatted_response['emotionPredictions'][0]['emotion']['disgust']
-        fear = formatted_response['emotionPredictions'][0]['emotion']['fear']
-        joy = formatted_response['emotionPredictions'][0]['emotion']['joy']
-        sadness = formatted_response['emotionPredictions'][0]['emotion']['sadness'] 
-
-        #Finding the emotion with the highest score
-        emotions = formatted_response['emotionPredictions'][0]['emotion']
-        dominant_emotion = max(emotions, key=emotions.get)  
-
-
-    #Printing in the expected format
-    return {'anger': anger, 'disgust': disgust, 'fear': fear, 'joy': joy, 'sadness': sadness, 'dominant_emotion': dominant_emotion}
-   
+    return {
+        'anger': None,
+        'disgust': None,
+        'fear': None,
+        'joy': scores['pos'],       
+        'sadness': scores['neg'],   
+        'dominant_emotion': dominant_emotion
+    }
