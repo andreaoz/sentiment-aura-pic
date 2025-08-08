@@ -3,17 +3,20 @@ import AuraEffect from './AuraEffect';
 
 function App() {
   const [text, setText] = useState("");
-  const [result, setResult] = useState("");
+  const [result, setResult] = useState(null);
 
   const RunSentimentAnalysis = () => {
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-      if (this.readyState === 4 && this.status === 200) {
-        setResult(this.responseText);
-      }
-    };
-    xhttp.open("GET", `emotionDetector?textToAnalyze=${encodeURIComponent(text)}`, true);
-    xhttp.send();
+    if (!text.trim()) return; // evita llamada vacía
+    fetch(`emotionDetector?textToAnalyze=${encodeURIComponent(text)}`)
+      .then(res => {
+        if (!res.ok) throw new Error("Error al analizar el texto");
+        return res.json();
+      })
+      .then(data => setResult(data))
+      .catch(err => {
+        console.error(err);
+        setResult(null);
+      });
   };
 
   return (
@@ -60,7 +63,13 @@ function App() {
                     Sentiment Analysis Result
                   </h3>
                   <div className="text-gray-700 text-lg bg-white p-4 border-1 border-orange-200">
-                    {result}
+                    <p><strong>Dominant emotion:</strong> {result.dominant_emotion}</p>
+                    <p>Anger: {result.anger}</p>
+                    <p>Disgust: {result.disgust}</p>
+                    <p>Fear: {result.fear}</p>
+                    <p>Joy: {result.joy}</p>
+                    <p>Sadness: {result.sadness}</p>
+                    <p>Compound: {result.compound}</p>
                   </div>
                 </div>
               )}
@@ -76,9 +85,9 @@ function App() {
                         borderColor: 'white' // naranja 200
                       }}>
               {/* Color Display Area */}
-              <div className="relative bg-gray-500 p-4 h-64 md:h-80 lg:h-96 flex items-center justify-center border border-gray-300 overflow-hidden">
+              <div className="relative bg-gray-50 p-4 h-64 md:h-80 lg:h-96 flex items-center justify-center border border-gray-300 overflow-hidden">
                 {result ? (
-                    <AuraEffect />
+                    <AuraEffect dominantEmotion={result.dominant_emotion}/>
                 ) : (
                   <div className="text-center text-gray-400">
                     <p className="text-lg">Your Sentiment Aura Picture will appear here.</p>

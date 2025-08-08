@@ -2,7 +2,7 @@
 This is the Emotion Detector Flask app. It receives a text input,
 analyzes the emotions using the emotion_detector, and returns the emotion analysis.
 """
-from flask import Flask, render_template, request
+from flask import Flask, jsonify, request
 from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask("Emotion Detector")
@@ -16,24 +16,18 @@ def sent_detector():
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyze)
 
-    compound =response ['compound']
-    anger = response['anger']
-    disgust = response['disgust']
-    fear = response['fear']
-    joy = response['joy']
-    sadness = response['sadness']
-    dominant_emotion = response['dominant_emotion']
+    if not response or response.get('dominant_emotion') is None:
+        return jsonify({"error": "Invalid text! Please try again!"}), 400
 
-    if dominant_emotion is None:
-        return "Invalid text! Please try again!"
-
-    return (
-        f"For the given statement, the system response is "
-        f"'anger': {anger}, 'disgust': {disgust}, 'fear': {fear}, "
-        f"'joy': {joy} and 'sadness': {sadness}. "
-        f"The dominant emotion is {dominant_emotion}."
-        f"Compound= {compound}."
-    )
+    return jsonify({
+        "compound": response['compound'],
+        "anger": response['anger'],
+        "disgust": response['disgust'],
+        "fear": response['fear'],
+        "joy": response['joy'],
+        "sadness": response['sadness'],
+        "dominant_emotion": response['dominant_emotion']
+    })
 
 if __name__ == "__main__":
     #had to use 7000 because I was using 5000 for the practice
