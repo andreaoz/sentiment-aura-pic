@@ -11,7 +11,7 @@ app = Flask("Emotion Detector")
 def sent_detector():
     """
     Analyzes the emotion of a given text and returns the results.
-    The dominant emotion and emotion scores (anger, disgust, fear, joy, sadness) are returned.
+    The dominant emotion and emotion scores (joy, sadness) are returned.
     """
     text_to_analyze = request.args.get('textToAnalyze')
     response = emotion_detector(text_to_analyze)
@@ -21,9 +21,6 @@ def sent_detector():
 
     return jsonify({
         "compound": response['compound'],
-        "anger": response['anger'],
-        "disgust": response['disgust'],
-        "fear": response['fear'],
         "joy": response['joy'],
         "sadness": response['sadness'],
         "dominant_emotion": response['dominant_emotion']

@@ -44,9 +44,10 @@ function getRandomBgColorDark(emotion) {
 }
 
 const bg1 = getRandomBgColorLight(dominantEmotion);
+console.log("dominant emotion: "+dominantEmotion);
 console.log("bg1: "+bg1);
 
-const bg2 = getRandomFromArray(allRandomColors);
+const bg2 = getRandomBgColorDark(dominantEmotion);
 console.log("bg2: "+bg2);
 
 let bg3From="bg-gray-200";
@@ -64,12 +65,13 @@ if(compound<0){
     bg3To = getRandomFromArray(allLightColors);
 }
 
+console.log("compound: "+compound);
 console.log("bg3From: "+bg3From);
 console.log("bg3To: "+bg3To);
 
 if(joy_value>=0.5){
     bg4From=getRandomBgColorDark("joy");
-    bg4To=getRandomBgColorLight("joy");
+    bg4To=getRandomBgColorDark("joy");
 }else{
     bg4From=getRandomBgColorLight("joy");
     bg4To=getRandomBgColorLight("joy");
@@ -77,31 +79,34 @@ if(joy_value>=0.5){
 
 if(sadness_value>=0.5){
     bg5From=getRandomBgColorDark("sadness");
-    bg5To=getRandomBgColorLight("sadness");
+    bg5To=getRandomBgColorDark("sadness");
 }else{
-    bg5From=getRandomBgColorDark("sadness");
+    bg5From=getRandomBgColorLight("sadness");
     bg5To=getRandomBgColorLight("sadness");
 }
 
+console.log("joy: "+joy_value);
+console.log("bg4From: "+bg4From);
+console.log("bg4To: "+bg4To);
+
+console.log("sadness: "+sadness_value);
+console.log("bg5From: "+bg5From);
+console.log("bg5To: "+bg5To);
+
   return (
     <div className="absolute inset-0 opacity-100 pointer-events-none bg-stone-50 fade-in">
-      {/*IMPORTANT COLORS*/}
 
       {/*Two colors based on the DOMINANT EMOTION*/}
-
-      {/*This one will be assigned with a switch*/}
        <div className={`absolute bottom-1/3 right-1/8 w-90 h-90 ${bg1} rounded-full blur-3xl opacity-100 animate-morph-2`}></div>
-        {/*This one will be random*/}
        <div className={`absolute top-2/3 left-1/2 w-50 h-60 ${bg2} rounded-full blur-3xl opacity-60 animate-morph-1`}></div>
 
        {/*This one will depend on the compound value
-            - if its positive
-            - if its negative*/}
+            - if its positive = light shade
+            - if its negative = dark shade
+        */}
         <div className={`absolute top-1/3 right-1/3 w-60 h-90 bg-gradient-to-br ${bg3From} ${bg3To} rounded-full blur-2xl opacity-80 animate-morph-3`}></div>
 
-         {/*This ones depend on the value of joy and sadness
-          The opacities will depend on their values; closer to 1 higher oppacity*/}
-
+         {/*This ones depend on the value of joy and sadness*/}
         {/*JOY*/}
         <div className={`absolute bottom-1/2 left-1/4 w-50 h-50 bg-gradient-to-tl ${bg4From} ${bg4To} rounded-full blur-2xl opacity-100 animate-morph-4`}></div>
         {/*SADNESS*/}
