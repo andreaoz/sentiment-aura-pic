@@ -84,8 +84,7 @@ if(sadness_value>=0.5){
 }
 
   return (
-    
-    <div className="absolute inset-0 opacity-100 pointer-events-none bg-stone-50">
+    <div className="absolute inset-0 opacity-100 pointer-events-none bg-stone-50 fade-in">
       {/*IMPORTANT COLORS*/}
 
       {/*Two colors based on the DOMINANT EMOTION*/}

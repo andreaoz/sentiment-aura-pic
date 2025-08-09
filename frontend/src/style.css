@@ -3,7 +3,13 @@
 .fade-in {
   opacity: 0;
   transform: translateY(20px);
-  animation: fadeInUp 1.5s ease forwards;
+  animation: fadeInUp 4s ease forwards;
+}
+
+.fade-in-fast {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 1s ease forwards;
 }
 
 @keyframes fadeInUp {
@@ -14,7 +20,7 @@
 }
 
 .animate-fadeInUp {
-  animation: fadeInUp 0.8s ease-out forwards;
+  animation: fadeInUp 2s ease-out forwards;
 }
 
 .delay-100 { animation-delay: 0.1s; }
@@ -242,4 +248,14 @@
 
 .animate-breathe {
   animation: breathe 4s ease-in-out infinite;
+}
+
+.date-format{
+  font-style: italic;
+}
+
+.order{
+  padding: 10px;
+  display: flex;
+  justify-content: right;
 }
