@@ -2,10 +2,15 @@
 This is the Emotion Detector Flask app. It receives a text input,
 analyzes the emotions using the emotion_detector, and returns the emotion analysis.
 """
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 from EmotionDetection.emotion_detection import emotion_detector
+import os
 
-app = Flask("Emotion Detector")
+
+app = Flask("Emotion Detector",
+            static_folder='../frontend/dist/assets',
+            static_url_path='/assets',
+            template_folder='../frontend/dist')
 
 @app.route("/emotionDetector")
 def sent_detector():
@@ -26,6 +31,15 @@ def sent_detector():
         "dominant_emotion": response['dominant_emotion']
     })
 
+@app.route('/')
+def index():
+    return render_template('index.html')
+
+@app.route('/<path:path>')
+def serve_react_app(path):
+    return render_template('index.html')
+
 if __name__ == "__main__":
     #had to use 7000 because I was using 5000 for the practice
-    app.run(host="0.0.0.0", port=700)
+    #app.run(host="0.0.0.0", port=700)
+    app.run(debug=True)
