@@ -1,23 +1,28 @@
 import { useState, useEffect } from 'react';
 import AuraEffect from './AuraEffect';
-import AuraTest from './AuraTest';
+
 
 function App() {
   const [text, setText] = useState("");
   const [result, setResult] = useState(null);
+  const [showAura, setShowAura] = useState(false); //Estado para controlar render
+  const [isLocked, setIsLocked] = useState(false);
 
-  const RunSentimentAnalysis = () => {
+  const RunSentimentAnalysis = async () => {
+    console.log("Ejecutando RunSentimentAnalysis");
     if (!text.trim()) return; // evita llamada vacía
-    fetch(`emotionDetector?textToAnalyze=${encodeURIComponent(text)}`)
-      .then(res => {
-        if (!res.ok) throw new Error("Error al analizar el texto");
-        return res.json();
-      })
-      .then(data => setResult(data))
-      .catch(err => {
-        console.error(err);
-        setResult(null);
-      });
+    setIsLocked(true);
+    try {
+    const res = await fetch(`emotionDetector?textToAnalyze=${encodeURIComponent(text)}`);
+    if (!res.ok) throw new Error("Error al analizar el texto");
+    const data = await res.json();
+    setResult(data);
+    setShowAura(true); 
+  } catch (err) {
+    console.error(err);
+    setResult(null);
+    setShowAura(false);
+  }
 
   };
 
@@ -30,13 +35,13 @@ function App() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen bg-gradient-to-br from-red-100 via-orange-50 via-yellow-50 via-green-50 via-blue-50 via-indigo-50 to-purple-100 p-4 ">
+    <div className="flex flex-col md:h-screen bg-gradient-to-br from-red-100 via-orange-50 via-yellow-50 via-green-50 via-blue-50 via-indigo-50 to-purple-100 p-4 ">
       <div className=" flex-grow max-w-7xl mx-auto fade-in-fast">
 
         {/* Header */}
-        <div className="text-center mb-8 pt-8">
+        <div className="text-center mb-8 pt-4">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <h1 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-red-700 via-yellow-700 via-green-600 via-blue-700 to-purple-900 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-4xl font-bold bg-gradient-to-r from-red-700 via-yellow-700 via-green-600 via-blue-700 to-purple-900 bg-clip-text text-transparent">
               Sentiment Aura Picture
             </h1>
           </div>
@@ -54,10 +59,17 @@ function App() {
                 <p className='italic text-base font-extralight'>Try to include very clear vocabulary to get a precise SAP. <br />You didn't like your SAP? Just run the sentiment analysis again and get a brand new one.</p>
                 <br />
                 <textarea
-                  className="w-full h-40 p-4 border-1 border-orange-200 focus:border-blue-400 transition-colors resize-none text-gray-700 placeholder-gray-400 bg-white"
+                  className={`w-full h-40 p-4 border-1 ${isLocked ? "bg-gray-200 cursor-not-allowed" : "bg-white" }`}
                   placeholder="¿How do you feel today? Share your thoghts..."
                   value={text}
+                  onClick={() => {
+                    if (isLocked) {
+                      setIsLocked(false); // Desbloquear textarea
+                      setShowAura(false); // Ocultar imagen
+                    }
+                  }}
                   onChange={(e) => setText(e.target.value)}
+                  readOnly={isLocked} 
                 />
               </div>
 
@@ -67,7 +79,7 @@ function App() {
                     onClick={RunSentimentAnalysis}
                     className="hidden md:inline-block px-8 py-4 bg-gradient-to-r from-red-700 via-yellow-700 to-green-700 text-white font-bold hover:from-blue-700 hover:to-purple-800 transition-all duration-900 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl"
                   >
-                    Run Sentiment Analysis
+                    Take a SAP
                   </button>
 
                   {/* Botón para pantallas pequeñas, que hace scroll al resultado */}
@@ -96,7 +108,7 @@ function App() {
               <div className="relative bg-gray-50 p-4 aspect-[3/4] w-full flex items-center justify-center border border-gray-300 overflow-hidden"
                    id="polaroidImg"
                     >
-                {result ? (
+                {showAura ? (
                     <AuraEffect 
                       dominantEmotion={result.dominant_emotion} 
                       compound={result.compound} 
@@ -127,8 +139,8 @@ function App() {
         </div>
           </div>
           {/* Footer */}
-          <footer className="py-8 px-6">
-            <div className="max-w-6xl mx-auto text-center text-gray-600">
+          <footer className="py-4 px-6">
+            <div className="max-w-6xl mx-auto text-center text-gray-500">
               <p>&copy; 2025 Andrea Oz</p>
             </div>
           </footer>

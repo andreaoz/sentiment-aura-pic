@@ -1,5 +1,5 @@
 
-const AuraTest = ({dominantEmotion,compound,joy_value,sadness_value}) => {
+const AuraEffect = ({dominantEmotion,compound,joy_value,sadness_value}) => {
 
 const emotionColorMapLight = {
   anger: ["bg-red-300", "bg-orange-100", "bg-amber-300", "bg-rose-200"],
@@ -110,4 +110,4 @@ if(sadness_value>=0.5){
   )
 }
 
-export default AuraTest;
+export default AuraEffect;
