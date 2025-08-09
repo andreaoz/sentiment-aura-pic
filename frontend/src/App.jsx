@@ -94,7 +94,7 @@ function App() {
             </div>
           </div>
               
-          {/* Right Column - Color Display Rectangle */}
+          {/* Right Column */}
           <div className="relative lg:col-span-1">
             <div className="relative bg-white p-6 shadow-lg border border-gray-200 w-80 mx-auto"
                 style={{
@@ -102,9 +102,8 @@ function App() {
                         borderBottomWidth: '1rem', // borde más ancho abajo
                         borderColor: 'white' // naranja 200
                       }}>
-              {/* Color Display Area */}
 
-              {/*<AuraTest/>*/}
+              {/* Plaroid Area */}
               <div className="relative bg-gray-50 p-4 aspect-[3/4] w-full flex items-center justify-center border border-gray-300 overflow-hidden"
                    id="polaroidImg"
                     >
