@@ -41,7 +41,7 @@ function App() {
         {/* Header */}
         <div className="text-center mb-8 pt-4">
           <div className="flex items-center justify-center gap-3 mb-4">
-            <h1 className="text-4xl md:text-4xl font-bold bg-gradient-to-r from-red-700 via-yellow-700 via-green-600 via-blue-700 to-purple-900 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-4xl font-bold bg-gradient-to-r from-orange-400 via-pink-300 to-purple-400 bg-clip-text text-transparent">
               Sentiment Aura Picture
             </h1>
           </div>
@@ -77,7 +77,7 @@ function App() {
                 {/* Botón para pantallas grandes */}
                   <button
                     onClick={RunSentimentAnalysis}
-                    className="hidden md:inline-block px-8 py-4 bg-gradient-to-r from-red-700 via-yellow-700 to-green-700 text-white font-bold hover:from-blue-700 hover:to-purple-800 transition-all duration-900 disabled:opacity-50 disabled:cursor-not-allowed rounded-xl"
+                    className="hidden md:inline-block px-8 py-4 bg-gradient-to-r from-orange-300 via-pink-200 to-purple-300 text-gray-700 font-medium hover:brightness-105 hover:shadow-md transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl shadow-sm"
                   >
                     Take a SAP
                   </button>
@@ -86,9 +86,9 @@ function App() {
                   <a
                     href="#polaroidImg"
                     onClick={RunSentimentAnalysis}
-                    className="inline-block md:hidden px-8 py-4 bg-gradient-to-r from-red-700 via-yellow-700 to-green-700 text-white font-bold hover:from-blue-700 hover:from-blue-500 hover:to-purple-500 transition-all duration-300 rounded-xl"
+                    className="inline-block md:hidden px-8 py-4 bg-gradient-to-r from-orange-300 via-pink-200 to-purple-300 text-gray-700 font-medium hover:brightness-105 hover:shadow-md transition-all duration-300 disabled:opacity-40 disabled:cursor-not-allowed rounded-xl shadow-sm"
                   >
-                    Run Sentiment Analysis
+                    Take a SAP
                   </a>
               </div>
             </div>
