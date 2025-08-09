@@ -1,5 +1,10 @@
 
-const AuraTest = ({dominantEmotion,compound,joy_value,sadness_value}) => {
+const AuraTest = () => {
+
+let dominantEmotion = "anger";
+let compound = 1;
+let joy_value = 0.8;
+let sadness_value = 0.4;
 
 const emotionColorMapLight = {
   anger: ["bg-red-300", "bg-orange-100", "bg-amber-300", "bg-rose-200"],

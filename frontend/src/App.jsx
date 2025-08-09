@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import AuraEffect from './AuraEffect';
+import AuraTest from './AuraTest';
 
 function App() {
   const [text, setText] = useState("");
@@ -85,9 +86,11 @@ function App() {
                         borderColor: 'white' // naranja 200
                       }}>
               {/* Color Display Area */}
+
+              {/*<AuraTest/>*/}
               <div className="relative bg-gray-50 p-4 h-64 md:h-80 lg:h-96 flex items-center justify-center border border-gray-300 overflow-hidden">
                 {result ? (
-                    <AuraEffect dominantEmotion={result.dominant_emotion}/>
+                    <AuraEffect dominantEmotion={result.dominant_emotion} compound={result.compound} joy_value={result.joy} sadness_value={result.sadness}/>
                 ) : (
                   <div className="text-center text-gray-400">
                     <p className="text-lg">Your Sentiment Aura Picture will appear here.</p>
