@@ -3,14 +3,20 @@ This is the Emotion Detector Flask app. It receives a text input,
 analyzes the emotions using the emotion_detector, and returns the emotion analysis.
 """
 from flask import Flask, jsonify, request, render_template
-from EmotionDetection.emotion_detection import emotion_detector
 import os
+from flask_cors import CORS
+import sys
 
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from EmotionDetection.emotion_detection import emotion_detector
 
 app = Flask("Emotion Detector",
             static_folder='../frontend/dist/assets',
             static_url_path='/assets',
             template_folder='../frontend/dist')
+
+CORS(app)
 
 @app.route("/emotionDetector")
 def sent_detector():
