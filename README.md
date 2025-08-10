@@ -2,6 +2,8 @@
 
 Fullstack application that analyzes the sentiment of user-input text using **NLTK VADER** and generates a dynamic animated image (**SAP**) that visually represents the detected emotions.
 
+![SAP]([https://res.cloudinary.com/dbtvmyrts/image/upload/v1754798078/sap_sbpuhx.png])
+
 ## Features
 - Sentiment analysis using **NLTK VADER**.  
 - Dynamic animation and color changes based on emotional tone.  
