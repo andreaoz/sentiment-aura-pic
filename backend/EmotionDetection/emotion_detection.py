@@ -3,7 +3,7 @@ nltk.download('vader_lexicon')
 
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 sid = SentimentIntensityAnalyzer()
-from emotionlist import fear_words, anger_words, sadness_words, disgust_words
+from .emotionlist import fear_words, anger_words, sadness_words, disgust_words
 
 def emotion_detector(text_to_analyse):
     scores = sid.polarity_scores(text_to_analyse)
