@@ -9,22 +9,22 @@ Fullstack application that analyzes the sentiment of user-input text using **NLT
 - Deployed on **Render** with a single domain for both frontend and backend.
 
 ## Installation
-# Clone the repository
-git clone https://github.com/your-username/sentiment-aura-picture.git
+### Clone the repository
+git clone https://github.com/andreaoz/sentiment-aura-picture.git
 
-# Backend setup
+### Backend setup
 cd backend
 pip install -r requirements.txt
 
-# Frontend setup
+### Frontend setup
 cd frontend
 npm install
 
-# Usage
+### Usage
 Run the backend server with Flask.
 Run the frontend with Vite.
 
-# VADER sentiment analysis
+### VADER sentiment analysis
 Hutto, C.J. & Gilbert, E.E. (2014). VADER: A Parsimonious Rule-based Model for
 Sentiment Analysis of Social Media Text. Eighth International Conference on
 Weblogs and Social Media (ICWSM-14). Ann Arbor, MI, June 2014.
