@@ -25,8 +25,8 @@ def sent_detector():
     The dominant emotion and emotion scores (joy, sadness) are returned.
     """
     text_to_analyze = request.args.get('textToAnalyze')
+    print(text_to_analyze)
     response = emotion_detector(text_to_analyze)
-
     if not response or response.get('dominant_emotion') is None:
         return jsonify({"error": "Invalid text! Please try again!"}), 400
 
